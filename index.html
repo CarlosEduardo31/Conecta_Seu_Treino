@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conecta Seu Treino</title>
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-bar"></div>
+        <div class="back-button">←</div>
+        <div class="logo">Conecta <span>Seu Treino</span></div>
+        <div class="subtitle">Transforme passos em recompensas</div>
+      </header>
+
+      <div class="screens">
+        <!-- Tela inicial -->
+        <div class="screen welcome-screen active" id="welcome-screen">
+          <h2>Bem-vindo ao Conecta Seu Treino!</h2>
+          <p class="intro-text">
+            Transforme seus passos em recompensas! Caminhe, corra ou pedale e
+            ganhe Capibas, a moeda digital do Recife.
+          </p>
+
+          <div class="feature-list">
+            <div class="feature-item">
+              Monitore suas atividades automaticamente via GPS
+            </div>
+            <div class="feature-item">
+              Cumpra desafios em áreas específicas para ganhar Capibas
+            </div>
+            <div class="feature-item">
+              Troque suas moedas por benefícios reais no Recife
+            </div>
+            <div class="feature-item">
+              Engaje-se com a cidade e incentive um estilo de vida ativo
+            </div>
+          </div>
+
+          <button class="start-button" id="start-button">Começar Agora</button>
+        </div>
+
+        <!-- Tela de escolha de atividade -->
+        <div
+          class="screen activity-selection-screen"
+          id="activity-selection-screen"
+        >
+          <h2>Escolha sua atividade</h2>
+          <p class="intro-text">
+            Selecione o tipo de exercício que você vai praticar hoje no Parque
+            da Jaqueira:
+          </p>
+
+          <div class="activity-container">
+            <div class="activity-card" data-activity="caminhada">
+              <div class="activity-icon">🚶</div>
+              <div class="activity-info">
+                <div class="activity-title">Caminhada</div>
+                <div class="activity-desc">
+                  Ritmo tranquilo, ideal para iniciantes
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-card" data-activity="corrida">
+              <div class="activity-icon">🏃</div>
+              <div class="activity-info">
+                <div class="activity-title">Corrida</div>
+                <div class="activity-desc">
+                  Maior intensidade para quem busca desafio
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-card" data-activity="bicicleta">
+              <div class="activity-icon">🚴</div>
+              <div class="activity-info">
+                <div class="activity-title">Bicicleta</div>
+                <div class="activity-desc">
+                  Explore mais caminhos com menor impacto
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-card" data-activity="bicicleta-estrada">
+              <div class="activity-icon">🚴‍♂️</div>
+              <div class="activity-info">
+                <div class="activity-title">Bicicleta na Estrada</div>
+                <div class="activity-desc">Combinando mobilidade e saúde</div>
+              </div>
+            </div>
+
+            <div class="activity-card" data-activity="patinete-estrada">
+              <div class="activity-icon">🛴</div>
+              <div class="activity-info">
+                <div class="activity-title">Patinete na Estrada</div>
+                <div class="activity-desc">
+                  Desloque-se com agilidade e baixo impacto ambiental
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="start-button" id="start-activity-button" disabled>
+            Iniciar Atividade
+          </button>
+        </div>
+
+        <!-- Tela de atividade em andamento -->
+        <div
+          class="screen activity-in-progress"
+          id="activity-in-progress-screen"
+        >
+          <h2 id="activity-title">Caminhada em andamento</h2>
+
+          <div class="map-container">
+            <div id="map" style="width: 100%; height: 100%"></div>
+          </div>
+
+          <div class="progress-info">
+            <div class="progress-item">
+              <div class="progress-value" id="time-value">00:00</div>
+              <div class="progress-label">Tempo</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-value" id="distance-value">0.0</div>
+              <div class="progress-label">Distância (km)</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-value" id="capibas-value">0</div>
+              <div class="progress-label">Capibas</div>
+            </div>
+          </div>
+
+          <button class="stop-button" id="stop-button">
+            Finalizar Atividade
+          </button>
+        </div>
+
+        <!-- Tela de resumo -->
+        <div class="screen summary-screen" id="summary-screen">
+          <h2 class="summary-title">Parabéns!</h2>
+          <p class="summary-subtitle">
+            Você completou sua atividade no Parque da Jaqueira
+          </p>
+
+          <div class="reward-container">
+            <div class="reward-amount" id="summary-capibas">120</div>
+            <div class="reward-label">Capibas ganhas</div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat-item">
+              <div class="stat-value" id="summary-time">18:32</div>
+              <div class="stat-label">Tempo</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="summary-distance">2.4</div>
+              <div class="stat-label">Km</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="summary-calories">187</div>
+              <div class="stat-label">Calorias</div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="secondary-button" id="home-button">Início</button>
+            <button class="primary-button" id="ranking-button">
+              Ver Ranking
+            </button>
+          </div>
+        </div>
+
+        <!-- Tela de ranking -->
+        <div class="screen ranking-screen" id="ranking-screen">
+          <h2>Ranking de Atividades</h2>
+
+          <div class="ranking-tabs">
+            <div class="ranking-tab active" data-period="week">Semanal</div>
+            <div class="ranking-tab" data-period="month">Mensal</div>
+          </div>
+
+          <div class="user-ranking">
+            <div class="ranking-item">
+              <div class="ranking-position">7</div>
+              <div class="ranking-avatar">Você</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">Sua posição</div>
+                <div class="ranking-stats">5 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">920</div>
+            </div>
+          </div>
+
+          <ul class="ranking-list">
+            <li class="ranking-item">
+              <div class="ranking-position top-ranking">1</div>
+              <div class="ranking-avatar">MC</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">Maria C.</div>
+                <div class="ranking-stats">12 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">2430</div>
+            </li>
+            <li class="ranking-item">
+              <div class="ranking-position top-ranking">2</div>
+              <div class="ranking-avatar">JP</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">João P.</div>
+                <div class="ranking-stats">9 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">1870</div>
+            </li>
+            <li class="ranking-item">
+              <div class="ranking-position top-ranking">3</div>
+              <div class="ranking-avatar">AS</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">Ana S.</div>
+                <div class="ranking-stats">8 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">1640</div>
+            </li>
+            <li class="ranking-item">
+              <div class="ranking-position">4</div>
+              <div class="ranking-avatar">PL</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">Pedro L.</div>
+                <div class="ranking-stats">7 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">1420</div>
+            </li>
+            <li class="ranking-item">
+              <div class="ranking-position">5</div>
+              <div class="ranking-avatar">LM</div>
+              <div class="ranking-user-info">
+                <div class="ranking-name">Luiza M.</div>
+                <div class="ranking-stats">6 atividades esta semana</div>
+              </div>
+              <div class="ranking-points">1210</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tela de histórico de atividades -->
+        <div
+          class="screen activities-history-screen"
+          id="activities-history-screen"
+        >
+          <h2>Seu Histórico de Atividades</h2>
+
+          <div class="activity-stats">
+            <div class="stat-card">
+              <div class="stat-value">27</div>
+              <div class="stat-label">Total de Atividades</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">84.3</div>
+              <div class="stat-label">Km Percorridos</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4310</div>
+              <div class="stat-label">Capibas Ganhas</div>
+            </div>
+          </div>
+
+          <div class="history-filter">
+            <select id="activity-type-filter">
+              <option value="all">Todas as atividades</option>
+              <option value="caminhada">Caminhada</option>
+              <option value="corrida">Corrida</option>
+              <option value="bicicleta">Bicicleta</option>
+            </select>
+          </div>
+
+          <div class="activity-history-list">
+            <div class="activity-history-item">
+              <div class="activity-date">Hoje, 15:30</div>
+              <div class="activity-history-detail">
+                <div class="activity-history-icon">🏃</div>
+                <div class="activity-history-info">
+                  <div class="activity-history-title">
+                    Corrida no Parque da Jaqueira
+                  </div>
+                  <div class="activity-history-stats">
+                    2.4 km • 18:32 min • 120 capibas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-history-item">
+              <div class="activity-date">Ontem, 17:45</div>
+              <div class="activity-history-detail">
+                <div class="activity-history-icon">🚶</div>
+                <div class="activity-history-info">
+                  <div class="activity-history-title">
+                    Caminhada no Parque da Jaqueira
+                  </div>
+                  <div class="activity-history-stats">
+                    3.1 km • 42:15 min • 155 capibas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-history-item">
+              <div class="activity-date">Sábado, 08:20</div>
+              <div class="activity-history-detail">
+                <div class="activity-history-icon">🚴</div>
+                <div class="activity-history-info">
+                  <div class="activity-history-title">
+                    Pedalada no Parque da Jaqueira
+                  </div>
+                  <div class="activity-history-stats">
+                    5.7 km • 24:40 min • 285 capibas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-history-item">
+              <div class="activity-date">15/02, 16:10</div>
+              <div class="activity-history-detail">
+                <div class="activity-history-icon">🏃</div>
+                <div class="activity-history-info">
+                  <div class="activity-history-title">
+                    Corrida no Parque da Jaqueira
+                  </div>
+                  <div class="activity-history-stats">
+                    2.8 km • 21:05 min • 140 capibas
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tela de perfil -->
+        <div class="screen profile-screen" id="profile-screen">
+          <div class="profile-header">
+            <div class="profile-avatar">JD</div>
+            <h2 class="profile-name">João da Silva</h2>
+            <div class="profile-level">Nível 8 - Explorador Ativo</div>
+          </div>
+
+          <div class="profile-stats">
+            <div class="stat-card">
+              <div class="stat-value">5310</div>
+              <div class="stat-label">Capibas Totais</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">1270</div>
+              <div class="stat-label">Capibas Disponíveis</div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h3>Dados Pessoais</h3>
+            <div class="profile-data">
+              <div class="profile-data-item">
+                <div class="profile-data-label">Email</div>
+                <div class="profile-data-value">joao.silva@email.com</div>
+              </div>
+              <div class="profile-data-item">
+                <div class="profile-data-label">Telefone</div>
+                <div class="profile-data-value">(81) 98765-4321</div>
+              </div>
+              <div class="profile-data-item">
+                <div class="profile-data-label">Data de Nascimento</div>
+                <div class="profile-data-value">15/05/1990</div>
+              </div>
+            </div>
+            <button class="edit-profile-button">Editar Perfil</button>
+          </div>
+
+          <div class="profile-section">
+            <h3>Meus Objetivos</h3>
+            <div class="goal-item">
+              <div class="goal-progress">
+                <div class="goal-progress-bar" style="width: 70%"></div>
+              </div>
+              <div class="goal-info">
+                <div class="goal-title">Visitar 3 parques diferentes</div>
+                <div class="goal-status">2/3 completos</div>
+              </div>
+            </div>
+            <div class="goal-item">
+              <div class="goal-progress">
+                <div class="goal-progress-bar" style="width: 45%"></div>
+              </div>
+              <div class="goal-info">
+                <div class="goal-title">Acumular 10.000 Capibas</div>
+                <div class="goal-status">5310/10000 completos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tela de recompensas -->
+        <div class="screen rewards-screen" id="rewards-screen">
+          <h2>Troque suas Capibas</h2>
+          <div class="user-capibas">
+            <div class="capibas-icon">🪙</div>
+            <div class="capibas-balance">1270</div>
+            <div class="capibas-label">Capibas disponíveis</div>
+          </div>
+
+          <div class="rewards-tabs">
+            <div class="reward-tab active" data-tab="tickets">Ingressos</div>
+            <div class="reward-tab" data-tab="food">Alimentação</div>
+            <div class="reward-tab" data-tab="services">Serviços</div>
+          </div>
+
+          <div class="rewards-list">
+            <div class="reward-card">
+              <div
+                class="reward-image"
+                style="background-color: var(--azul-pe)"
+              >
+                🎭
+              </div>
+              <div class="reward-info">
+                <div class="reward-title">Ingresso Teatro Santa Isabel</div>
+                <div class="reward-description">
+                  Válido para qualquer espetáculo em cartaz
+                </div>
+                <div class="reward-price">400 capibas</div>
+              </div>
+              <button class="reward-button">Resgatar</button>
+            </div>
+
+            <div class="reward-card">
+              <div
+                class="reward-image"
+                style="background-color: var(--azul-pe)"
+              >
+                🏊
+              </div>
+              <div class="reward-info">
+                <div class="reward-title">Entrada Parque Aquático</div>
+                <div class="reward-description">
+                  Passe de dia inteiro para o Veneza Water Park
+                </div>
+                <div class="reward-price">850 capibas</div>
+              </div>
+              <button class="reward-button">Resgatar</button>
+            </div>
+
+            <div class="reward-card">
+              <div
+                class="reward-image"
+                style="background-color: var(--azul-pe)"
+              >
+                🎬
+              </div>
+              <div class="reward-info">
+                <div class="reward-title">Cinema Recife</div>
+                <div class="reward-description">
+                  Ingresso para qualquer sessão
+                </div>
+                <div class="reward-price">350 capibas</div>
+              </div>
+              <button class="reward-button">Resgatar</button>
+            </div>
+
+            <div class="reward-card">
+              <div
+                class="reward-image"
+                style="background-color: var(--azul-pe)"
+              >
+                🏛️
+              </div>
+              <div class="reward-info">
+                <div class="reward-title">Museu Cais do Sertão</div>
+                <div class="reward-description">
+                  Entrada para visitação completa
+                </div>
+                <div class="reward-price">250 capibas</div>
+              </div>
+              <button class="reward-button">Resgatar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer navigation -->
+      <div class="nav-footer" id="nav-footer" style="display: none">
+        <div class="nav-item active" data-screen="home">
+          <div class="nav-icon">🏠</div>
+          <div>Início</div>
+        </div>
+        <div class="nav-item" data-screen="activities">
+          <div class="nav-icon">🏃</div>
+          <div>Atividades</div>
+        </div>
+        <div class="nav-item" data-screen="rewards">
+          <div class="nav-icon">🏆</div>
+          <div>Ranking</div>
+        </div>
+        <div class="nav-item" data-screen="profile">
+          <div class="nav-icon">👤</div>
+          <div>Perfil</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.js"></script>
+
+    <script src="./js/scripts.js"></script>
+  </body>
+</html>
