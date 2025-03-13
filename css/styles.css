@@ -1,0 +1,732 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --azul-pe: #003d7a;
+  --vermelho-pe: #c41e3a;
+  --amarelo-pe: #ffd700;
+  --branco: #ffffff;
+  --cinza-claro: #f5f5f5;
+  --cinza-escuro: #333333;
+}
+
+body {
+  background-color: var(--cinza-claro);
+  color: var(--cinza-escuro);
+}
+
+.container {
+  max-width: 414px;
+  margin: 0 auto;
+  background: var(--branco);
+  min-height: 100vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+header {
+  background: var(--azul-pe);
+  color: var(--branco);
+  padding: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.header-bar {
+  height: 8px;
+  background: var(--vermelho-pe);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.logo span {
+  color: var(--amarelo-pe);
+}
+
+.back-button {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: var(--branco);
+  font-size: 24px;
+  display: none;
+}
+
+.screens {
+  padding: 20px;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Tela inicial */
+.welcome-screen h2 {
+  margin-bottom: 15px;
+  color: var(--azul-pe);
+}
+
+.intro-text {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.feature-list {
+  margin: 20px 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.feature-item::before {
+  content: "🔹";
+  margin-right: 10px;
+  color: var(--azul-pe);
+}
+
+.start-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: var(--vermelho-pe);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 0.3s;
+}
+
+.start-button:hover {
+  background: #a01a30;
+}
+
+/* Tela de escolha de atividade */
+.activity-card {
+  background: var(--branco);
+  border: 2px solid var(--cinza-claro);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.activity-card:hover {
+  border-color: var(--azul-pe);
+  transform: translateY(-2px);
+}
+
+.activity-card.selected {
+  border-color: var(--azul-pe);
+  background-color: rgba(0, 61, 122, 0.05);
+}
+
+.activity-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  width: 40px;
+  height: 40px;
+  background: var(--azul-pe);
+  color: var(--branco);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-title {
+  font-weight: bold;
+}
+
+.activity-desc {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.activity-container {
+  max-height: 300px; /* Ajuste conforme necessário */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaço entre os cards */
+}
+
+/* Tela de atividade em andamento */
+.activity-in-progress {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.map-container {
+  width: 100%;
+  height: 250px;
+  background: #ddd;
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.progress-item {
+  text-align: center;
+  flex: 1;
+}
+
+.progress-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--azul-pe);
+}
+
+.progress-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.stop-button {
+  background: var(--vermelho-pe);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Tela de resumo */
+.summary-screen {
+  text-align: center;
+}
+
+.summary-title {
+  color: var(--azul-pe);
+  margin-bottom: 5px;
+}
+
+.summary-subtitle {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.reward-container {
+  background: var(--amarelo-pe);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  color: var(--cinza-escuro);
+}
+
+.reward-amount {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.reward-label {
+  margin-top: 5px;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--azul-pe);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action-buttons .primary-button {
+  background: var(--azul-pe);
+  color: var(--branco);
+}
+
+.action-buttons .secondary-button {
+  background: var(--cinza-claro);
+  color: var(--cinza-escuro);
+}
+
+/* Tela de ranking */
+.ranking-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.ranking-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.ranking-tab.active {
+  color: var(--azul-pe);
+  border-bottom: 2px solid var(--azul-pe);
+  font-weight: bold;
+}
+
+.user-ranking {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: rgba(0, 61, 122, 0.1);
+  border-radius: 10px;
+}
+
+.ranking-list {
+  list-style: none;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ranking-position {
+  width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.top-ranking {
+  color: var(--vermelho-pe);
+}
+
+.ranking-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ddd;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+}
+
+.ranking-user-info {
+  flex-grow: 1;
+}
+
+.ranking-name {
+  font-weight: bold;
+}
+
+.ranking-stats {
+  font-size: 12px;
+  color: #666;
+}
+
+.ranking-points {
+  font-weight: bold;
+  color: var(--azul-pe);
+}
+
+/* Footer navigation */
+.nav-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 414px;
+  height: 60px;
+  background: var(--branco);
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  color: var(--azul-pe);
+}
+
+.nav-icon {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.screen.active {
+  animation: fadeIn 0.5s;
+}
+
+/* Parque da Jaqueira Label */
+.park-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.user-marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--vermelho-pe);
+  border: 3px solid var(--branco);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para o histórico de atividades */
+.activity-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+  margin: 0 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--azul-pe);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.history-filter {
+  margin: 20px 0;
+}
+
+.history-filter select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: var(--branco);
+}
+
+.activity-history-list {
+  margin-top: 20px;
+}
+
+.activity-history-item {
+  margin-bottom: 20px;
+}
+
+.activity-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.activity-history-detail {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.activity-history-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--azul-pe);
+  color: var(--branco);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.activity-history-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.activity-history-stats {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos para perfil */
+.profile-header {
+  text-align: center;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--azul-pe);
+  color: var(--branco);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 auto 15px;
+}
+
+.profile-name {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.profile-level {
+  color: var(--azul-pe);
+  font-size: 14px;
+}
+
+.profile-section {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.profile-section h3 {
+  color: var(--azul-pe);
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.profile-data-item {
+  display: flex;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-data-label {
+  flex: 1;
+  color: #666;
+}
+
+.profile-data-value {
+  flex: 2;
+  font-weight: 500;
+}
+
+.edit-profile-button {
+  background: var(--azul-pe);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.goal-item {
+  margin-bottom: 15px;
+}
+
+.goal-progress {
+  height: 10px;
+  background: #eee;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.goal-progress-bar {
+  height: 100%;
+  background: var(--vermelho-pe);
+  border-radius: 5px;
+}
+
+.goal-title {
+  font-weight: 500;
+}
+
+.goal-status {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos para recompensas */
+.user-capibas {
+  background: var(--amarelo-pe);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--cinza-escuro);
+}
+
+.capibas-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.capibas-balance {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.rewards-tabs {
+  display: flex;
+  margin: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.reward-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.reward-tab.active {
+  color: var(--azul-pe);
+  border-bottom: 2px solid var(--azul-pe);
+  font-weight: bold;
+}
+
+.reward-card {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.reward-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: var(--branco);
+  margin-right: 15px;
+}
+
+.reward-info {
+  flex-grow: 1;
+}
+
+.reward-title {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.reward-description {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.reward-price {
+  font-weight: bold;
+  color: var(--azul-pe);
+}
+
+.reward-button {
+  background: var(--azul-pe);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
